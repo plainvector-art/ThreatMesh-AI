@@ -1,11 +1,15 @@
 services:
+  # Full-Stack Web Service (Serves FastAPI Backend + Built React Frontend on 1 Free Render Web Instance)
   - type: web
-    name: threatmesh-ai-api
+    name: threatmesh-ai
     env: python
     region: oregon
-    buildCommand: "pip install -r backend/requirements.txt"
+    plan: free
+    buildCommand: "cd frontend && npm install && npm run build && cd ../backend && pip install -r requirements.txt"
     startCommand: "cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT"
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.8
       - key: TAVILY_API_KEY
         sync: false
       - key: N8N_WEBHOOK_URL
@@ -13,10 +17,14 @@ services:
       - key: ENVIRONMENT
         value: production
 
+  # Decoupled Static Frontend Site (Optional alternative for dual-service setup)
   - type: static
     name: threatmesh-ai-frontend
     buildCommand: "cd frontend && npm install && npm run build"
     staticPublishPath: "./frontend/dist"
+    envVars:
+      - key: VITE_API_URL
+        value: https://threatmesh-ai.onrender.com/api
     routes:
       - type: rewrite
         source: "/*"

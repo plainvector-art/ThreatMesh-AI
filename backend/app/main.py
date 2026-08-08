@@ -31,6 +31,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+import os
+from fastapi.staticfiles import StaticFiles
+
 # Register API Routers
 app.include_router(scan_router, prefix=settings.API_V1_STR)
 app.include_router(metrics_router, prefix=settings.API_V1_STR)
@@ -49,6 +52,13 @@ def health_check():
         "version": settings.VERSION,
         "environment": settings.ENVIRONMENT
     }
+
+# Serve compiled frontend static assets in production if available
+frontend_dist_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../frontend/dist"))
+if os.path.exists(frontend_dist_dir):
+    logger.info(f"Mounting static frontend files from: {frontend_dist_dir}")
+    app.mount("/", StaticFiles(directory=frontend_dist_dir, html=True), name="static")
+
 
 def seed_demo_data():
     db = SessionLocal()
