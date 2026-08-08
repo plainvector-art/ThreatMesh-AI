@@ -25,13 +25,15 @@ export const SecurityAwareness: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Overview Banner */}
-      <div className="glass-panel p-6 rounded-xl border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-950 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="glass-panel p-6 rounded-2xl border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-950 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <BookOpen className="w-5 h-5 text-amber-400" />
-            <h2 className="text-lg font-bold text-slate-100">Security Awareness &amp; Threat Intelligence</h2>
-            <span className="px-2 py-0.5 text-[10px] font-mono rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
-              ThreatMesh Intel Engine
+          <div className="flex items-center gap-2.5 mb-1.5">
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+              <BookOpen className="w-4.5 h-4.5" />
+            </div>
+            <h2 className="text-lg font-bold text-slate-100 font-display">Security Awareness &amp; Threat Intelligence</h2>
+            <span className="px-2.5 py-0.5 text-[10px] font-mono font-semibold rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 uppercase tracking-wider">
+              Threat Intel Engine
             </span>
           </div>
           <p className="text-xs text-slate-400 max-w-2xl leading-relaxed">
@@ -43,8 +45,8 @@ export const SecurityAwareness: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Column: Interactive Security Quizzes */}
         <div className="lg:col-span-7 space-y-5">
-          <div className="glass-panel p-5 rounded-xl border border-slate-800">
-            <h3 className="text-sm font-bold text-slate-200 mb-4 flex items-center gap-2">
+          <div className="glass-panel p-5 rounded-2xl border border-slate-800 shadow-xl">
+            <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-4 flex items-center gap-2 font-display">
               <Award className="w-4 h-4 text-amber-400" />
               Security Analyst Knowledge Challenges ({quizzes.length} Modules)
             </h3>
@@ -56,15 +58,15 @@ export const SecurityAwareness: React.FC = () => {
                 const isCorrect = selectedOpt === q.correct_index;
 
                 return (
-                  <div key={q.id} className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-3">
+                  <div key={q.id} className="p-4.5 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs space-y-3 shadow-inner">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-slate-200">{q.title}</span>
-                      <span className="px-2 py-0.5 text-[10px] font-mono rounded bg-slate-800 text-slate-400 uppercase">
+                      <span className="font-bold text-slate-100 text-xs">{q.title}</span>
+                      <span className="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-slate-850 text-slate-400 border border-slate-750 uppercase tracking-wider">
                         {q.difficulty}
                       </span>
                     </div>
 
-                    <p className="text-slate-300 font-medium">{q.question}</p>
+                    <p className="text-slate-300 font-medium text-xs leading-relaxed">{q.question}</p>
 
                     {/* Options List */}
                     <div className="space-y-2">
@@ -85,9 +87,9 @@ export const SecurityAwareness: React.FC = () => {
                           <button
                             key={idx}
                             onClick={() => handleSelectOption(q.id, idx)}
-                            className={`w-full text-left p-2.5 rounded-lg border transition-all ${btnStyle}`}
+                            className={`w-full text-left p-3 rounded-xl border transition-all cursor-pointer ${btnStyle}`}
                           >
-                            <span className="font-mono mr-2">{String.fromCharCode(65 + idx)}.</span>
+                            <span className="font-mono mr-2 font-bold">{String.fromCharCode(65 + idx)}.</span>
                             {opt}
                           </button>
                         );
@@ -99,19 +101,19 @@ export const SecurityAwareness: React.FC = () => {
                       <button
                         onClick={() => handleSubmitQuiz(q.id)}
                         disabled={selectedOpt === undefined}
-                        className="px-3.5 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-semibold disabled:opacity-40 transition-all"
+                        className="px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-bold disabled:opacity-40 transition-all cursor-pointer"
                       >
                         Submit Answer
                       </button>
                     ) : (
-                      <div className={`p-3 rounded-lg border text-xs leading-relaxed ${
+                      <div className={`p-3.5 rounded-xl border text-xs leading-relaxed ${
                         isCorrect ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300' : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
                       }`}>
                         <div className="flex items-center gap-1.5 font-bold mb-1">
                           {isCorrect ? <CheckCircle className="w-4 h-4 text-emerald-400" /> : <XCircle className="w-4 h-4 text-rose-400" />}
                           {isCorrect ? 'Correct Answer!' : 'Incorrect Answer'}
                         </div>
-                        <p className="text-slate-300 font-sans">{q.explanation}</p>
+                        <p className="text-slate-300 font-sans text-xs">{q.explanation}</p>
                       </div>
                     )}
                   </div>
@@ -123,23 +125,23 @@ export const SecurityAwareness: React.FC = () => {
 
         {/* Right Column: Live Cybersecurity News & Threat Advisories */}
         <div className="lg:col-span-5 space-y-5">
-          <div className="glass-panel p-5 rounded-xl border border-slate-800">
-            <h3 className="text-sm font-bold text-slate-200 mb-4 flex items-center gap-2">
+          <div className="glass-panel p-5 rounded-2xl border border-slate-800 shadow-xl">
+            <h3 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-4 flex items-center gap-2 font-display">
               <Newspaper className="w-4 h-4 text-blue-400" />
               Live Threat Advisories &amp; CVE News
             </h3>
 
             <div className="space-y-4">
               {news.map((item) => (
-                <div key={item.id} className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+                <div key={item.id} className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs space-y-2.5 shadow-inner">
                   <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 text-[10px] font-mono rounded bg-slate-800 text-slate-300 uppercase">
+                    <span className="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-slate-850 text-slate-300 border border-slate-750 uppercase tracking-wider">
                       {item.category}
                     </span>
                     <span className="text-[10px] font-mono text-slate-500">{item.timestamp}</span>
                   </div>
 
-                  <h4 className="font-semibold text-slate-100 text-xs">{item.title}</h4>
+                  <h4 className="font-bold text-slate-100 text-xs">{item.title}</h4>
                   <p className="text-slate-400 text-[11px] leading-relaxed font-sans">{item.summary}</p>
                 </div>
               ))}

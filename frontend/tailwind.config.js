@@ -11,6 +11,7 @@ export default {
         slate: {
           950: '#020617',
           900: '#0f172a',
+          850: '#151e32',
           800: '#1e293b',
           700: '#334155',
         },
@@ -30,6 +31,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Menlo', 'monospace'],
+        display: ['Outfit', 'Inter', 'sans-serif'],
       },
       animation: {
         'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
