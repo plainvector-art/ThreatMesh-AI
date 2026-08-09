@@ -50,3 +50,68 @@ def get_db() -> Generator:
         yield db
     finally:
         db.close()
+
+class ImageRecord(Base):
+    __tablename__ = "images"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    sha256 = Column(String, index=True, nullable=False, unique=True)
+    filename = Column(String, nullable=False)
+    mime_type = Column(String, nullable=False)
+    size = Column(Integer, nullable=False)
+    width = Column(Integer, nullable=True)
+    height = Column(Integer, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class ImageAnalysis(Base):
+    __tablename__ = "analyses"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    image_id = Column(String, nullable=False)
+    status = Column(String, nullable=False)
+    verdict = Column(String, nullable=False)
+    ai_probability = Column(Float, nullable=False)
+    real_probability = Column(Float, nullable=False)
+    confidence = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class ModelRun(Base):
+    __tablename__ = "model_runs"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    analysis_id = Column(String, nullable=False)
+    provider = Column(String, nullable=False)
+    model_name = Column(String, nullable=False)
+    model_version = Column(String, nullable=False)
+    ai_probability = Column(Float, nullable=True)
+    real_probability = Column(Float, nullable=True)
+    latency_ms = Column(Integer, nullable=True)
+    status = Column(String, nullable=False)
+    raw_response_reference = Column(Text, nullable=True)
+
+class ForensicSignal(Base):
+    __tablename__ = "forensic_signals"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    analysis_id = Column(String, nullable=False)
+    signal_type = Column(String, nullable=False)
+    value = Column(Float, nullable=False)
+    interpretation = Column(String, nullable=True)
+
+class ProvenanceRecord(Base):
+    __tablename__ = "provenance"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    analysis_id = Column(String, nullable=False)
+    c2pa_present = Column(Boolean, default=False)
+    c2pa_valid = Column(Boolean, nullable=True)
+    creator = Column(String, nullable=True)
+    software = Column(String, nullable=True)
+    actions = Column(Text, nullable=True)
+    signature_status = Column(String, nullable=True)
+
+class ModelVersion(Base):
+    __tablename__ = "model_versions"
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    provider = Column(String, nullable=False)
+    model_name = Column(String, nullable=False)
+    version = Column(String, nullable=False)
+    checksum = Column(String, nullable=True)
+    license = Column(String, nullable=True)
+    active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
