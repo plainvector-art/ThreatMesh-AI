@@ -102,7 +102,13 @@ class EvidenceFusionEngine:
         return "application/octet-stream"
 
     def analyze(self, image_bytes: bytes, filename: str) -> Dict[str, Any]:
-        sha256 = hashlib.sha256(image_bytes).hexdigest()
+        FUSION_POLICY_VERSION = "1.0"
+        local_model_version = self.providers[2].model_name
+
+        # Cache key considers image hash, local model version, and fusion policy version
+        image_hash = hashlib.sha256(image_bytes).hexdigest()
+        cache_key_string = f"{image_hash}_{local_model_version}_{FUSION_POLICY_VERSION}"
+        sha256 = hashlib.sha256(cache_key_string.encode()).hexdigest()
         db = SessionLocal()
 
         try:
