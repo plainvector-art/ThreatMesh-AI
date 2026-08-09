@@ -1,0 +1,16 @@
+[
+  {
+    "id": "img-001",
+    "path": "ai_portrait.jpg",
+    "ground_truth": "AI_GENERATED",
+    "source": "Unsplash",
+    "generator": "StyleGAN (Assumed for benchmark test)"
+  },
+  {
+    "id": "img-002",
+    "path": "real_photo.jpg",
+    "ground_truth": "REAL_CAMERA_PHOTO",
+    "source": "Unsplash",
+    "generator": "None"
+  }
+]
